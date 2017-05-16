@@ -2,7 +2,7 @@
 
 Pinch to zoom and double/single tap support most likely used to preview images.
 
-![Preview](https://raw.githubusercontent.com/LeBlaaanc/react-native-zoomable/blob/master/preview.gif)
+![Preview](https://raw.githubusercontent.com/LeBlaaanc/react-native-zoomable/master/preview.gif)
 
 ## Usage
 
