@@ -28,3 +28,6 @@ Basics:
 | zoomScale | number | zoom scale. (default: 4) |
 | zoomInTrigger | string | can be 'singletap' or 'doubletap'. (default: 'doubletap') |
 | zoomOutTrigger | string | can be 'singletap' or 'doubletap'. (default: 'singletap') |
+
+## Copyright
+Copyright (c) 2016 Chris LeBlanc. Licensed under the MIT license.

@@ -1,6 +1,6 @@
 {
   "name": "react-native-zoomable",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Pinch to zoom and double/single tap support most likely to preview images.",
   "main": "index.js",
   "scripts": {
