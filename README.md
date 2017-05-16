@@ -1,4 +1,4 @@
-# react-native-photo-view
+# react-native-zoomable
 
 Pinch to zoom and double/single tap support most likely used to preview images.
 
