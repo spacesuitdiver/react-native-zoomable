@@ -1,6 +1,6 @@
 # react-native-zoomable
 
-Pinch to zoom and double/single tap support most likely used to preview images.
+Pinch to zoom and double/single tap component most likely used to preview images but can be used to wrap other components.
 
 ![Preview](https://raw.githubusercontent.com/LeBlaaanc/react-native-zoomable/master/preview.gif)
 
