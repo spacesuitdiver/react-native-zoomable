@@ -6,6 +6,7 @@ class Zoomable extends React.Component {
   static state = {
     lastTouchNativeEvent: {},
     lastTouchEndTimestamp: 0,
+    lastZoomActionTimestamp: 0,
     isZoomed: false,
   };
 
@@ -32,20 +33,20 @@ class Zoomable extends React.Component {
     if (this.state.isZoomed) {
       switch (tapToZoomOut) {
         case 'single':
-          this.zoomOut(locationX, locationY);
+          this.zoomOut(e);
           break;
         case 'double':
-          if (this.isDoubleTap(e)) this.zoomOut(locationX, locationY);
+          if (this.isDoubleTap(e)) this.zoomOut(e);
           break;
         default:
       }
     } else {
       switch (tapToZoomIn) {
         case 'single':
-          this.zoomIn(locationX, locationY);
+          this.zoomIn(e);
           break;
         case 'double':
-          if (this.isDoubleTap(e)) this.zoomIn(locationX, locationY);
+          if (this.isDoubleTap(e)) this.zoomIn(e);
           break;
         default:
       }
@@ -54,16 +55,25 @@ class Zoomable extends React.Component {
     this.setState({ lastTouchEndTimestamp: timestamp });
   };
 
-  zoomIn = (x, y) => {
-    const size = { width: 0, height: 0 };
+  zoomIn = (e) => {
+    const { locationX: x, locationY: y, timestamp } = e.nativeEvent;
+    const coords = { x, y, width: 0, height: 0 };
 
-    this.scrollView.scrollResponderZoomTo({ x, y, ...size });
+    if (this.isAlreadyZooming(e)) return;
+
+    this.scrollView.scrollResponderZoomTo(coords);
+    this.setState({ lastZoomActionTimestamp: timestamp });
   };
 
-  zoomOut = (x, y) => {
-    const size = { width: 10000, height: 10000 };
+  zoomOut = (e) => {
+    const { locationX: x, locationY: y, timestamp } = e.nativeEvent;
+    const coords = { x, y, width: 10000, height: 10000 };
 
-    this.scrollView.scrollResponderZoomTo({ x, y, ...size });
+    if (this.isAlreadyZooming(e)) return;
+
+    this.scrollView.scrollResponderZoomTo(coords);
+    this.setState({ lastZoomActionTimestamp: timestamp });
+
   };
 
   isDoubleTap = (e) => {
@@ -86,6 +96,12 @@ class Zoomable extends React.Component {
     if (touches.length > 1) return false; // don't handle multitouch gestures
 
     return locationX === lastLocationX && locationY === lastLocationY;
+  };
+
+  isAlreadyZooming = (e) => {
+    const { timestamp } = e.nativeEvent;
+
+    return timestamp - this.state.lastZoomActionTimestamp <= 300;
   };
 
   render() {
