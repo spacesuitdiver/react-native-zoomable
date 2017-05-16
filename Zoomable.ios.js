@@ -4,7 +4,7 @@ import { ScrollView } from 'react-native';
 class Zoomable extends React.Component {
 
   static state = {
-    lastTouchNativeEvent: {},
+    lastTouchStartNativeEvent: {},
     lastTouchEndTimestamp: 0,
     lastZoomActionTimestamp: 0,
     isZoomed: false,
@@ -12,44 +12,32 @@ class Zoomable extends React.Component {
 
   onScroll = (e) => {
     this.props.onScrollOrZoom(e);
-    this.setState({
-      isZoomed: e.nativeEvent.zoomScale > 1,
-    });
+    this.setState({ isZoomed: e.nativeEvent.zoomScale > 1 });
   };
 
   onTouchStart = (e) => {
-    const { touches } = e.nativeEvent;
-    if (touches.length > 1) return; // don't handle multitouch gestures
+    if (this.isMultiTouch(e)) return;
 
-    this.setState({ lastTouchNativeEvent: e.nativeEvent });
+    this.setState({ lastTouchStartNativeEvent: e.nativeEvent });
   };
 
   onTouchEnd = (e) => {
-    const { timestamp, locationX, locationY } = e.nativeEvent;
+    const { timestamp } = e.nativeEvent;
     const { zoomInTrigger, zoomOutTrigger } = this.props;
 
-    if (!this.isTap(e) || this.isLongPress(e)) return;
+    const trigger = this.state.isZoomed ? zoomOutTrigger : zoomInTrigger;
+    const actionToPerform = this.state.isZoomed ? this.zoomOut : this.zoomIn;
 
-    if (this.state.isZoomed) {
-      switch (zoomOutTrigger) {
-        case 'singletap':
-          this.zoomOut(e);
-          break;
-        case 'doubletap':
-          if (this.isDoubleTap(e)) this.zoomOut(e);
-          break;
-        default:
-      }
-    } else {
-      switch (zoomInTrigger) {
-        case 'singletap':
-          this.zoomIn(e);
-          break;
-        case 'doubletap':
-          if (this.isDoubleTap(e)) this.zoomIn(e);
-          break;
-        default:
-      }
+    if (this.isLongPress(e) || this.isMoving(e) || this.isMultiTouch(e)) return;
+
+    switch (trigger) {
+      case 'singletap':
+        actionToPerform(e);
+        break;
+      case 'doubletap':
+        if (this.isSecondTap(e)) actionToPerform(e);
+        break;
+      default:
     }
 
     this.setState({ lastTouchEndTimestamp: timestamp });
@@ -73,10 +61,9 @@ class Zoomable extends React.Component {
 
     this.scrollView.scrollResponderZoomTo(coords);
     this.setState({ lastZoomActionTimestamp: timestamp });
-
   };
 
-  isDoubleTap = (e) => {
+  isSecondTap = (e) => {
     const { timestamp } = e.nativeEvent;
 
     return timestamp - this.state.lastTouchEndTimestamp <= 300;
@@ -84,19 +71,19 @@ class Zoomable extends React.Component {
 
   isLongPress = (e) => {
     const { timestamp } = e.nativeEvent;
-    const { timestamp: lastTimestamp } = this.state.lastTouchNativeEvent;
+    const { timestamp: lastTimestamp } = this.state.lastTouchStartNativeEvent;
 
     return timestamp - lastTimestamp >= 300;
   };
 
-  isTap = (e) => {
-    const { touches, locationX, locationY } = e.nativeEvent;
-    const { locationX: lastLocationX, locationY: lastLocationY } = this.state.lastTouchNativeEvent;
+  isMoving = (e) => {
+    const { locationX, locationY } = e.nativeEvent;
+    const { locationX: lastLocationX, locationY: lastLocationY } = this.state.lastTouchStartNativeEvent;
 
-    if (touches.length > 1) return false; // don't handle multitouch gestures
-
-    return locationX === lastLocationX && locationY === lastLocationY;
+    return locationX !== lastLocationX && locationY !== lastLocationY;
   };
+
+  isMultiTouch = ({ nativeEvent: { touches } }) => touches.length > 1;
 
   isAlreadyZooming = (e) => {
     const { timestamp } = e.nativeEvent;
@@ -131,8 +118,8 @@ Zoomable.propTypes = {
   children: PropTypes.element.isRequired,
   onScrollOrZoom: PropTypes.func,
   zoomScale: PropTypes.number,
-  zoomInTrigger: PropTypes.oneOf(['singletap', 'doubletap']),
-  zoomOutTrigger: PropTypes.oneOf(['singletap', 'doubletap']),
+  zoomInTrigger: PropTypes.oneOf(['singletap', 'doubletap', 'longpress']),
+  zoomOutTrigger: PropTypes.oneOf(['singletap', 'doubletap', 'longpress']),
 };
 
 Zoomable.defaultProps = {
