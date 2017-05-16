@@ -1,0 +1,30 @@
+{
+  "name": "react-native-zoomable",
+  "version": "1.0.1",
+  "description": "Pinch to zoom and double/single tap support most likely to preview images.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeBlaaanc/react-native-zoomable.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeBlaaanc/react-native-zoomable/issues"
+  },
+  "homepage": "https://github.com/LeBlaaanc/react-native-zoomable#readme",
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-preset-react-native": "^1.9.2",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
+    "eslint-plugin-class-property": "^1.0.6",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-prefer-class-properties": "^1.0.0",
+    "eslint-plugin-react": "^7.0.1",
+    "eslint-plugin-react-native": "^2.3.2"
+  }
+}
