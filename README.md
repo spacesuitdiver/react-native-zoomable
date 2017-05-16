@@ -26,5 +26,5 @@ Basics:
 |-----------------|----------|--------------------------------------------------------------|
 | onScrollOrZoom | function | called when scrolled or zoomed, sent an event as a param |
 | zoomScale | number | zoom scale. (default: 4) |
-| tapToZoomIn | string | can be 'double' or 'single'. (default: 'double') |
-| tapToZoomOut | string | can be 'double or 'single'. (default: 'single') |
+| zoomInTrigger | string | can be 'singletap' or 'doubletap'. (default: 'doubletap') |
+| zoomOutTrigger | string | can be 'singletap' or 'doubletap'. (default: 'singletap') |

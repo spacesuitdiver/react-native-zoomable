@@ -26,26 +26,26 @@ class Zoomable extends React.Component {
 
   onTouchEnd = (e) => {
     const { timestamp, locationX, locationY } = e.nativeEvent;
-    const { tapToZoomIn, tapToZoomOut } = this.props;
+    const { zoomInTrigger, zoomOutTrigger } = this.props;
 
     if (!this.isTap(e) || this.isLongPress(e)) return;
 
     if (this.state.isZoomed) {
-      switch (tapToZoomOut) {
-        case 'single':
+      switch (zoomOutTrigger) {
+        case 'singletap':
           this.zoomOut(e);
           break;
-        case 'double':
+        case 'doubletap':
           if (this.isDoubleTap(e)) this.zoomOut(e);
           break;
         default:
       }
     } else {
-      switch (tapToZoomIn) {
-        case 'single':
+      switch (zoomInTrigger) {
+        case 'singletap':
           this.zoomIn(e);
           break;
-        case 'double':
+        case 'doubletap':
           if (this.isDoubleTap(e)) this.zoomIn(e);
           break;
         default:
@@ -101,7 +101,7 @@ class Zoomable extends React.Component {
   isAlreadyZooming = (e) => {
     const { timestamp } = e.nativeEvent;
 
-    return timestamp - this.state.lastZoomActionTimestamp <= 300;
+    return timestamp - this.state.lastZoomActionTimestamp <= 500;
   };
 
   render() {
@@ -131,15 +131,15 @@ Zoomable.propTypes = {
   children: PropTypes.element.isRequired,
   onScrollOrZoom: PropTypes.func,
   zoomScale: PropTypes.number,
-  tapToZoomIn: PropTypes.oneOf(['single', 'double']),
-  tapToZoomOut: PropTypes.oneOf(['single', 'double']),
+  zoomInTrigger: PropTypes.oneOf(['singletap', 'doubletap']),
+  zoomOutTrigger: PropTypes.oneOf(['singletap', 'doubletap']),
 };
 
 Zoomable.defaultProps = {
   onScrollOrZoom: () => {},
   zoomScale: 4,
-  tapToZoomIn: 'double',
-  tapToZoomOut: 'double',
+  zoomInTrigger: 'doubletap',
+  zoomOutTrigger: 'singletap',
 };
 
 export default Zoomable;
