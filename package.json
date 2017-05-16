@@ -1,6 +1,6 @@
 {
   "name": "react-native-zoomable",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Pinch to zoom and double/single tap support most likely to preview images.",
   "main": "index.js",
   "scripts": {
@@ -10,8 +10,8 @@
     "type": "git",
     "url": "git+https://github.com/LeBlaaanc/react-native-zoomable.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Chris LeBlanc <chris@leblaaanc.com> (http://github.com/LeBlaaanc)",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/LeBlaaanc/react-native-zoomable/issues"
   },
