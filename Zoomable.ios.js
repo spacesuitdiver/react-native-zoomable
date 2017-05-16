@@ -108,7 +108,7 @@ class Zoomable extends React.Component {
     return (
       <ScrollView
         ref={(ref) => { this.scrollView = ref; }}
-        onScroll={this.onScroll.bind(this)}
+        onScroll={this.onScroll}
         onTouchStart={this.onTouchStart}
         onTouchEnd={this.onTouchEnd}
         scrollEventThrottle={100}
