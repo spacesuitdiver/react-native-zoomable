@@ -29,4 +29,4 @@ import Zoomable from 'react-native-zoomable';
 | zoomOutTrigger | string | can be 'singletap' or 'doubletap'. (default: 'singletap') |
 
 ## Copyright
-Copyright (c) 2016 Chris LeBlanc. Licensed under the MIT license.
+Copyright (c) 2017 Chris LeBlanc. Licensed under the MIT license.
