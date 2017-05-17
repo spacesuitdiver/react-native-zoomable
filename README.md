@@ -10,7 +10,6 @@ Component for pinch and double/single tap to zoom, most likely used to preview i
 import Zoomable from 'react-native-zoomable';
 ```
 
-Basics:
 ```javascript
 <Zoomable
   zoomScale={3}
