@@ -1,3 +1,3 @@
-import Zoomable from "./Zoomable.ios";
+import Zoomable from './Zoomable';
 
 export default Zoomable;
