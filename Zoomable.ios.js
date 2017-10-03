@@ -107,6 +107,8 @@ class Zoomable extends React.Component {
         showsVerticalScrollIndicator={false}
         maximumZoomScale={this.props.zoomScale}
         centerContent
+        style={this.props.style}
+        contentContainerStyle={this.props.contentContainerStyle}
       >
         {this.props.children}
       </ScrollView>
@@ -120,6 +122,8 @@ Zoomable.propTypes = {
   zoomScale: PropTypes.number,
   zoomInTrigger: PropTypes.oneOf(['singletap', 'doubletap', 'longpress']),
   zoomOutTrigger: PropTypes.oneOf(['singletap', 'doubletap', 'longpress']),
+  style: PropTypes.shape({}),
+  contentContainerStyle: PropTypes.shape({}),
 };
 
 Zoomable.defaultProps = {
@@ -127,6 +131,8 @@ Zoomable.defaultProps = {
   zoomScale: 4,
   zoomInTrigger: 'doubletap',
   zoomOutTrigger: 'singletap',
+  style: {},
+  contentContainerStyle: {},
 };
 
 export default Zoomable;
